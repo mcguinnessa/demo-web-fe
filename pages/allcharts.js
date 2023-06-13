@@ -70,13 +70,13 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
           label: "MO",
           borderColor: "#3e95cd",
           backgroundColor: "#7bb6dd",
-          fill: true,
+          fill: false,
         }
         ]
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
       }
     });
   var mtChart = new Chart(mt_ctx, {
@@ -97,7 +97,7 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
       options: {
 	//responsive means the chart is resized when the window is
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
 //        layout: {
 //          padding: {
 //            top: 5,
@@ -124,7 +124,7 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
       }
     });
     var cputChart = new Chart(cput_ctx, {
@@ -143,7 +143,7 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
       }
     });
     var memChart = new Chart(mem_ctx, {
@@ -162,7 +162,7 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
       }
     });
     var diskChart = new Chart(disk_ctx, {
@@ -181,41 +181,55 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
       }
     });
   }, [])
   return (
     <>
-  <div className="float-container">
+  <div className={styles.container}>
+       <div className={styles.chart1}><canvas id="moChart" ></canvas></div>
+       <div className={styles.chart2}><canvas id="mtChart" ></canvas></div>
+       <div className={styles.chart3}><canvas id="cpuuChart" ></canvas></div>
+  </div>
+  <div className={styles.container}>
+       <div className={styles.chart4}><canvas id="cputChart" ></canvas></div>
+       <div className={styles.chart5}><canvas id="memChart" ></canvas></div>
+       <div className={styles.chart6}><canvas id="diskChart" ></canvas></div>
+  </div>
 
-  <div className="float-child">
-       MO Traffic
-       <canvas id="moChart" width="400px" height="400px" ></canvas>
-  </div>
-  <div className="float-child">
-       MT Traffic
-       <canvas id="mtChart" width="400px" height="400px" ></canvas>
-  </div>
-  <div className="float-child">
-       CPU Usage
-       <canvas id="cpuuChart" width="400px" height="400px" ></canvas>
-  </div>
-  <div className="float-child">
-       CPU Temp
-       <canvas id="cputChart" width="400px" height="400px" ></canvas>
-  </div>
-  <div className="float-child">
-       Memory Usage
-       <canvas id="memChart" width="400px" height="400px" ></canvas>
-  </div>
-  <div className="float-child">
-       Disk Usage
-       <canvas id="diskChart" width="400px" height="400px" ></canvas>
-  </div>
-  </div>
     </>
   )
 }
 
 export default Example;
+
+/*
+  <div className={styles.floatcontainer}>
+
+  <div className={styles.floatchild}>
+       MO Traffic
+       <canvas id="moChart" width="400px" height="400px" ></canvas>
+  </div>
+  <div className={styles.floatchild}>
+       MT Traffic
+       <canvas id="mtChart" width="400px" height="400px" ></canvas>
+  </div>
+  <div className={styles.floatchild}>
+       CPU Usage
+       <canvas id="cpuuChart" ></canvas>
+  </div>
+  <div className={styles.floatchild}>
+       CPU Temp
+       <canvas id="cputChart" ></canvas>
+  </div>
+  <div className={styles.floatchild}>
+       Memory Usage
+       <canvas id="memChart" width="400px" height="400px" ></canvas>
+  </div>
+  <div className={styles.floatchild}>
+       Disk Usage
+       <canvas id="diskChart" width="400px" height="400px" ></canvas>
+  </div>
+  </div>
+  */
