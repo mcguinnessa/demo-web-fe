@@ -1,50 +1,113 @@
 import { useEffect } from "react"
 import { Chart } from "chart.js";
-function Example() {
+
+
+export async function getStaticProps() {
+
+  const wrapper_host = process.env.WRAPPER_HOST
+  const wrapper_port = process.env.WRAPPER_PORT
+  const wrapper_metric = process.env.WRAPPER_METRIC
+  const wrapper_url = "http://" + wrapper_host + ":" + wrapper_port + "/" + wrapper_metric
+  console.log(wrapper_url)
+
+
+  //const res = await fetch('https://api.github.com/repos/developit/preact')
+  //const response  = await fetch('ec2-3-8-157-149.eu-west-2.compute.amazonaws.com:3000/motraffic')
+  const mo_resp  = await fetch('http://ec2-3-8-157-149.eu-west-2.compute.amazonaws.com:3000/motraffic')
+  const mo_json = await mo_resp.json()
+  const mt_resp  = await fetch('http://ec2-3-8-157-149.eu-west-2.compute.amazonaws.com:3000/motraffic')
+  const mt_json = await mt_resp.json()
+  console.log("IS OK")
+  console.log(mo_resp.ok)
+  console.log(mo_json)
+  console.log(mt_json)
+  console.log("AFTER2")
+
+  return {
+    props: {
+      //stars: json.stargazers_count,
+      mo_json,
+      mt_json
+    },
+  }
+}
+
+
+function Example({mo_json, mt_json}) {
+
+
   useEffect(() => {
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
+
+    var mo_ctx = document.getElementById('moChart').getContext('2d');
+    var mt_ctx = document.getElementById('mtChart').getContext('2d');
+    var moChart = new Chart(mo_ctx, {
       type: 'line',
       data: {
-        labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        //labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        labels: mo_json.timestamps,
         datasets: [{
-          data: [86, 114, 106, 106, 107, 111, 133],
-          label: "Applied",
+          //data: [86, 114, 106, 106, 107, 111, 133],
+          data: mo_json.data,
+          label: "MO",
           borderColor: "#3e95cd",
           backgroundColor: "#7bb6dd",
-          fill: false,
-        }, {
-          data: [70, 90, 44, 60, 83, 90, 100],
-          label: "Accepted",
-          borderColor: "#3cba9f",
-          backgroundColor: "#71d1bd",
-          fill: false,
-        }, {
-          data: [10, 21, 60, 44, 17, 21, 17],
-          label: "Pending",
-          borderColor: "#ffa500",
-          backgroundColor: "#ffc04d",
-          fill: false,
-        }, {
-          data: [6, 3, 2, 2, 7, 0, 16],
-          label: "Rejected",
-          borderColor: "#c45850",
-          backgroundColor: "#d78f89",
           fill: false,
         }
         ]
       },
+      options: {
+        responsive: false,
+        maintainAspectRatio: false,
+        layout: {
+          padding: {
+            top: 5,
+            left: 35,
+            right: 35,
+            bottom: 15
+          }
+	}
+      }
     });
+  var mtChart = new Chart(mt_ctx, {
+    type: 'line',
+    data: {
+      //labels: ["Tunday", "Tonday", "Tuesday", "Tednesday", "Thursday", "Triday", "Taturday"],
+      labels: mt_json.timestamps,
+      datasets: [{
+        //data: [86, 114, 106, 106, 107, 111, 133],
+        data: mt_json.data,
+        label: "MT",
+        borderColor: "#3e95cd",
+        backgroundColor: "#7bb6dd",
+        fill: false,
+      }
+      ]
+    },
+      options: {
+        responsive: false,
+        maintainAspectRatio: false,
+        layout: {
+          padding: {
+            top: 5,
+            left: 35,
+            right: 35,
+            bottom: 15
+          }
+	}
+      }
+  });
   }, [])
   return (
     <>
-      {/* line chart */}
-      <h1 className="w-[110px] mx-auto mt-10 text-xl font-semibold capitalize ">line Chart</h1>
-      <div className="w-[1100px] h-screen flex mx-auto my-auto">
-        <div className='border border-gray-400 pt-0 rounded-xl  w-full h-fit my-auto  shadow-xl'>
-          <canvas id='myChart'></canvas>
-        </div>
-      </div>
+  <div>
+      <canvas id="moChart" width="440px" height="440px"></canvas>
+      <canvas id="mtChart" width="440px" height="440px"></canvas>
+  </div>
+
+  <div>
+      <canvas id="mtChart" width="440px" height="440px"></canvas>
+  </div>
+
     </>
   )
 }
