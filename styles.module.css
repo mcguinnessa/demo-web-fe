@@ -1,0 +1,36 @@
+.hello {
+  font: 15px Helvetica, Arial, sans-serif;
+  background: #eee;
+  padding: 100px;
+  text-align: center;
+  transition: 100ms ease-in background;
+}
+.hello:hover {
+  background: #ccc;
+}
+
+.flex-container {
+    display: flex;
+}
+
+.flex-child {
+    flex: 1;
+    border: 2px solid yellow;
+}
+
+.flex-child:first-child {
+    margin-right: 20px;
+}
+
+.float-container {
+    border: 3px solid #fff;
+    padding: 20px;
+    color: blue;
+}
+
+.float-child {
+    width: 50%;
+    float: left;
+    padding: 20px;
+    border: 2px solid red;
+}
