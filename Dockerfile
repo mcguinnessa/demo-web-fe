@@ -20,6 +20,9 @@ COPY --from=builder /app/.next /usr/share/nginx/html
 # Add your nginx.conf
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
+ENV WRAPPER_HOST="ec2-3-8-157-149.eu-west-2.compute.amazonaws.com" 
+ENV WRAPPER_PORT=3000
+
 
 # Expose port
 EXPOSE 3000 80
