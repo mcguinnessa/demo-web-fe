@@ -12,32 +12,55 @@ export async function getStaticProps() {
   const wrapper_url = "http://" + wrapper_host + ":" + wrapper_port + "/" 
   console.log(wrapper_url)
 
-
   //const res = await fetch('https://api.github.com/repos/developit/preact')
   //const response  = await fetch('ec2-3-8-157-149.eu-west-2.compute.amazonaws.com:3000/motraffic')
   //const mo_resp  = await fetch('http://ec2-3-8-157-149.eu-west-2.compute.amazonaws.com:3000/motraffic')
+
+
+  /*This is an attempt at a promise to make it more efficient, but the backend needs streamlining before
+    it will work
+    */
+//  let mo_json;
+//  const mo_resp  = fetch(wrapper_url+"motraffic").then( mo_resp => {
+//    //const mo_json = await mo_resp.json()
+//    return mo_resp.json();
+//  }).then(mo_json => {
+//    return mo_json;
+//  })
+	
+  var mo_json = {timestamps : "No Data", data: "No Data"}
+  var mt_json = {timestamps : "No Data", data: "No Data"}
+  var cpuusage_json = {timestamps : "No Data", data: "No Data"}
+  var cputemp_json = {timestamps : "No Data", data: "No Data"}
+  var memusage_json = {timestamps : "No Data", data: "No Data"}
+  var diskusage_json ={timestamps : "No Data", data: "No Data"}
+
+  try {
   const mo_resp  = await fetch(wrapper_url+"motraffic")
-  const mo_json = await mo_resp.json()
   const mt_resp  = await fetch(wrapper_url+"mttraffic")
-  const mt_json = await mt_resp.json()
   const cpuusage_resp  = await fetch(wrapper_url+"cpuusage")
-  const cpuusage_json = await cpuusage_resp.json()
   const cputemp_resp  = await fetch(wrapper_url+"cputemp")
-  const cputemp_json = await cputemp_resp.json()
   const memusage_resp  = await fetch(wrapper_url+"memusage")
-  const memusage_json = await memusage_resp.json()
   const diskusage_resp  = await fetch(wrapper_url+"diskusage")
-  const diskusage_json = await diskusage_resp.json()
+
+  mo_json = await mo_resp.json()
+  mt_json = await mt_resp.json()
+  cpuusage_json = await cpuusage_resp.json()
+  cputemp_json = await cputemp_resp.json()
+  memusage_json = await memusage_resp.json()
+  diskusage_json = await diskusage_resp.json()
+  } catch (err) {
+    console.log("Failed to get data:" + err);
+  }
 //  console.log("IS OK")
 //  console.log(mo_resp.ok)
 //  console.log(mo_json)
 //  console.log(mt_json)
-  console.log(cputemp_json)
+//  console.log(cputemp_json)
 //  console.log("AFTER2")
 
   return {
     props: {
-      //stars: json.stargazers_count,
       mo_json,
       mt_json,
       cpuusage_json,
