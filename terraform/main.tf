@@ -23,16 +23,42 @@ resource "aws_ecs_task_definition" "my_first_task" {
   [
     {
       "name": "my-first-task",
-      "image": "mcguinnessa/node-web-app",
+      "image": "mcguinnessa/web-fe",
       "essential": true,
       "portMappings": [
         {
-          "containerPort": 8080,
-          "hostPort": 8080
+          "containerPort": 3000,
+          "hostPort": 3000
         }
       ],
       "memory": 512,
-      "cpu": 256
+      "cpu": 256,
+      "environment": [
+      {
+        "name": "MONGODB_USER",
+        "value": "mongodb"
+      },
+      {
+        "name": "MONGODB_PASSWORD",
+        "value": "KGnBhz5er1bqd6DH"
+      },
+      {
+        "name": "MONGODB_URI",
+        "value": "cluster0.jvpg12m.mongodb.net"
+      },
+      {
+        "name": "SERVER_PORT",
+        "value": "3000"
+      }],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "firelens-container",
+          "awslogs-region": "eu-west-2",
+          "awslogs-create-group": "true",
+          "awslogs-stream-prefix": "firelens"
+        }
+      }
     }
   ]
   DEFINITION
@@ -74,8 +100,10 @@ resource "aws_ecs_service" "my_first_service" {
   load_balancer {
     target_group_arn = "${aws_lb_target_group.target_group.arn}" # Referencing our target group
     container_name   = "${aws_ecs_task_definition.my_first_task.family}"
-    container_port   = 8080 # Specifying the container port
+    container_port   = 3000 # Specifying the container port
   }
+
+  depends_on = [aws_lb_listener.listener]
 
   network_configuration {
     subnets          = ["${aws_default_subnet.default_subnet_a.id}", "${aws_default_subnet.default_subnet_b.id}", "${aws_default_subnet.default_subnet_c.id}"]
