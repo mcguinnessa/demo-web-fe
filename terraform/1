@@ -4,20 +4,8 @@ provider "aws" {
 #  access_key = ""
 #  secret_key = ""
 }
-variable "mongo_user"  {
-  description = "mongodb user name"
-  type = string
-  default = ""
-}
-
-variable "mongo_pass"  {
-  description = "mongodb password"
-  type = string
-  default = ""
-}
-
-variable "mongo_url"  {
-  description = "mongodb url"
+variable "mongo-user"  {
+  description = " mongodb user name"
   type = string
   default = ""
 }
@@ -53,15 +41,15 @@ resource "aws_ecs_task_definition" "my_first_task" {
       "environment": [
       {
         "name": "MONGODB_USER",
-        "value": "${var.mongo_user}"
+        "value": mongo-user
       },
       {
         "name": "MONGODB_PASSWORD",
-        "value": "${var.mongo_pass}"
+        "value": var.mongo-pass
       },
       {
         "name": "MONGODB_URI",
-        "value": "${var.mongo_url}"
+        "value": "cluster0.jvpg12m.mongodb.net"
       },
       {
         "name": "SERVER_PORT",
