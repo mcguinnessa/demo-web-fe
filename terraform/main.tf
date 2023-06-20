@@ -4,20 +4,8 @@ provider "aws" {
 #  access_key = ""
 #  secret_key = ""
 }
-variable "mongo_user"  {
-  description = "mongodb user name"
-  type = string
-  default = ""
-}
-
-variable "mongo_pass"  {
-  description = "mongodb password"
-  type = string
-  default = ""
-}
-
-variable "mongo_url"  {
-  description = "mongodb url"
+variable "wrapper_host"  {
+  description = "hostname of the wrapper"
   type = string
   default = ""
 }
@@ -52,20 +40,12 @@ resource "aws_ecs_task_definition" "my_first_task" {
       "cpu": 256,
       "environment": [
       {
-        "name": "MONGODB_USER",
-        "value": "${var.mongo_user}"
-      },
-      {
-        "name": "MONGODB_PASSWORD",
-        "value": "${var.mongo_pass}"
-      },
-      {
-        "name": "MONGODB_URI",
-        "value": "${var.mongo_url}"
-      },
-      {
-        "name": "SERVER_PORT",
+        "name": "WRAPPER_PORT",
         "value": "3000"
+      },
+      {
+        "name": "WRAPPER_HOST",
+        "value": "${var.wrapper_host}"
       }],
       "logConfiguration": {
         "logDriver": "awslogs",
