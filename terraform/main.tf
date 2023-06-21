@@ -17,9 +17,9 @@ variable "wrapper_host"  {
 #}
 
 
-resource "aws_ecs_cluster" "my_cluster" {
-  name = "my-cluster" # Naming the cluster
-}
+#resource "aws_ecs_cluster" "my_cluster" {
+#  name = "my-cluster" # Naming the cluster
+#}
 
 #      "image": "${aws_ecr_repository.my_first_ecr_repo.repository_url}",
 resource "aws_ecs_task_definition" "my_first_task" {
@@ -87,15 +87,16 @@ resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-resource "aws_ecs_service" "my_first_service" {
-  name            = "my-first-service"                             # Naming our first service
-  cluster         = "${aws_ecs_cluster.my_cluster.id}"             # Referencing our created Cluster
+resource "aws_ecs_service" "webfe_service" {
+  name            = "webfe-service"                             # Naming our first service
+  #cluster         = "${aws_ecs_cluster.my_cluster.id}"             # Referencing our created Cluster
+  cluster         = "monitor-cluster"
   task_definition = "${aws_ecs_task_definition.my_first_task.arn}" # Referencing the task our service will spin up
   launch_type     = "FARGATE"
   desired_count   = 3 # Setting the number of containers we want deployed to 3
 
   load_balancer {
-    target_group_arn = "${aws_lb_target_group.target_group.arn}" # Referencing our target group
+    target_group_arn = "${aws_lb_target_group.webfe_target_group.arn}" # Referencing our target group
     container_name   = "${aws_ecs_task_definition.my_first_task.family}"
     container_port   = 3000 # Specifying the container port
   }
@@ -148,7 +149,7 @@ resource "aws_default_subnet" "default_subnet_c" {
 # The Load balancer
 #
 resource "aws_alb" "application_load_balancer" {
-  name               = "test-lb-tf" # Naming our load balancer
+  name               = "webfe-lb" # Naming our load balancer
   load_balancer_type = "application"
   subnets = [ # Referencing the default subnets
     "${aws_default_subnet.default_subnet_a.id}",
@@ -176,8 +177,8 @@ resource "aws_security_group" "load_balancer_security_group" {
   }
 }
 
-resource "aws_lb_target_group" "target_group" {
-  name        = "target-group"
+resource "aws_lb_target_group" "webfe_target_group" {
+  name        = "webfe-target-group"
   port        = 80
   protocol    = "HTTP"
   target_type = "ip"
@@ -194,7 +195,7 @@ resource "aws_lb_listener" "listener" {
   protocol          = "HTTP"
   default_action {
     type             = "forward"
-    target_group_arn = "${aws_lb_target_group.target_group.arn}" # Referencing our target group
+    target_group_arn = "${aws_lb_target_group.webfe_target_group.arn}" # Referencing our target group
   }
 }
 
