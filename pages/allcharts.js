@@ -1,5 +1,6 @@
 import { useEffect } from "react"
-import { Chart } from "chart.js";
+//import { Chart } from "chart.js";
+import { Chart } from "chart.js/auto";
 
 import styles from '../styles.module.css'
 
