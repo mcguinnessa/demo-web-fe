@@ -3,6 +3,9 @@ import { useEffect } from "react"
 import { Chart } from "chart.js/auto";
 
 import styles from '../styles.module.css'
+require('events').EventEmitter.prototype._maxListeners = 100;
+
+
 
 
 export async function getStaticProps() {
