@@ -22,12 +22,12 @@ variable "wrapper_host"  {
 #}
 
 #      "image": "${aws_ecr_repository.my_first_ecr_repo.repository_url}",
-resource "aws_ecs_task_definition" "my_first_task" {
-  family                   = "my-first-task" # Naming our first task
+resource "aws_ecs_task_definition" "webfe_task" {
+  family                   = "webfe-task" # Naming our first task
   container_definitions    = <<DEFINITION
   [
     {
-      "name": "my-first-task",
+      "name": "webfe-task",
       "image": "mcguinnessa/web-fe",
       "essential": true,
       "portMappings": [
@@ -36,9 +36,13 @@ resource "aws_ecs_task_definition" "my_first_task" {
           "hostPort": 3000
         }
       ],
-      "memory": 512,
-      "cpu": 256,
+      "memory": 2048,
+      "cpu": 1024,
       "environment": [
+      {
+        "name": "NODE_OPTIONS",
+        "value": "--trace-warnings"
+      },
       {
         "name": "WRAPPER_PORT",
         "value": "3000"
@@ -50,10 +54,10 @@ resource "aws_ecs_task_definition" "my_first_task" {
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "firelens-container",
+          "awslogs-group": "monitor-logging-container",
           "awslogs-region": "eu-west-2",
           "awslogs-create-group": "true",
-          "awslogs-stream-prefix": "firelens"
+          "awslogs-stream-prefix": "webfe"
         }
       }
     }
@@ -61,8 +65,8 @@ resource "aws_ecs_task_definition" "my_first_task" {
   DEFINITION
   requires_compatibilities = ["FARGATE"] # Stating that we are using ECS Fargate
   network_mode             = "awsvpc"    # Using awsvpc as our network mode as this is required for Fargate
-  memory                   = 512         # Specifying the memory our container requires
-  cpu                      = 256         # Specifying the CPU our container requires
+  memory                   = 2048         # Specifying the memory our container requires
+  cpu                      = 1024         # Specifying the CPU our container requires
   execution_role_arn       = "${aws_iam_role.ecsTaskExecutionRole.arn}"
 }
 
@@ -91,13 +95,13 @@ resource "aws_ecs_service" "webfe_service" {
   name            = "webfe-service"                             # Naming our first service
   #cluster         = "${aws_ecs_cluster.my_cluster.id}"             # Referencing our created Cluster
   cluster         = "monitor-cluster"
-  task_definition = "${aws_ecs_task_definition.my_first_task.arn}" # Referencing the task our service will spin up
+  task_definition = "${aws_ecs_task_definition.webfe_task.arn}" # Referencing the task our service will spin up
   launch_type     = "FARGATE"
-  desired_count   = 3 # Setting the number of containers we want deployed to 3
+  desired_count   = 1 # Setting the number of containers we want deployed to 3
 
   load_balancer {
     target_group_arn = "${aws_lb_target_group.webfe_target_group.arn}" # Referencing our target group
-    container_name   = "${aws_ecs_task_definition.my_first_task.family}"
+    container_name   = "${aws_ecs_task_definition.webfe_task.family}"
     container_port   = 3000 # Specifying the container port
   }
 
@@ -184,7 +188,7 @@ resource "aws_lb_target_group" "webfe_target_group" {
   target_type = "ip"
   vpc_id      = "${aws_default_vpc.default_vpc.id}" # Referencing the default VPC
   health_check {
-    matcher = "200,301,302"
+    matcher = "200,301,302,308"
     path = "/"
   }
 }
