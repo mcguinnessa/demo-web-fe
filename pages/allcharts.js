@@ -3,6 +3,9 @@ import { useEffect } from "react"
 import { Chart } from "chart.js/auto";
 
 import styles from '../styles.module.css'
+require('events').EventEmitter.prototype._maxListeners = 100;
+
+
 
 
 export async function getStaticProps() {
@@ -10,8 +13,9 @@ export async function getStaticProps() {
   const wrapper_host = process.env.WRAPPER_HOST
   const wrapper_port = process.env.WRAPPER_PORT
 //  const wrapper_metric = process.env.WRAPPER_METRIC
-  const wrapper_url = "http://" + wrapper_host + ":" + wrapper_port + "/" 
-  console.log(wrapper_url)
+	//const wrapper_url = "http://" + wrapper_host + ":" + wrapper_port + "/" 
+  const wrapper_url = wrapper_host + ":" + wrapper_port + "/" 
+  console.log("Requesting:" + wrapper_url)
 
   //const res = await fetch('https://api.github.com/repos/developit/preact')
   //const response  = await fetch('ec2-3-8-157-149.eu-west-2.compute.amazonaws.com:3000/motraffic')

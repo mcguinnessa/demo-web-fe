@@ -33,4 +33,7 @@ RUN npm ci
 EXPOSE 3000
 # Start the app
 #CMD [ "npx", "serve", "build" ]
-CMD [ "npm", "run", "dev" ]
+#CMD [ "npm", "run", "dev" ]
+CMD [ "node", "--trace-warnings", "./node_modules/.bin/next", "dev"]
+
+
