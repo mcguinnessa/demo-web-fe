@@ -14,8 +14,15 @@ export async function getStaticProps() {
   const wrapper_port = process.env.WRAPPER_PORT
 //  const wrapper_metric = process.env.WRAPPER_METRIC
 	//const wrapper_url = "http://" + wrapper_host + ":" + wrapper_port + "/" 
-//  const wrapper_url = wrapper_host + ":" + wrapper_port + "/" 
-  const wrapper_url = wrapper_host + "/" 
+
+  var wrapper_url = ""
+  if (typeof wrapper_port !== 'undefined' && wrapper_port !== null && wrapper_port !== ""){
+     wrapper_url = wrapper_host + ":" + wrapper_port + "/" 
+  } else {
+     wrapper_url = wrapper_host + "/" 
+  }	 
+
+  //wrapper_url = wrapper_host + "/" 
   console.log("Requesting:" + wrapper_url)
 
   //const res = await fetch('https://api.github.com/repos/developit/preact')
