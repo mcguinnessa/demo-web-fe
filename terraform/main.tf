@@ -97,7 +97,9 @@ resource "aws_ecs_service" "webfe_service" {
   cluster         = "monitor-cluster"
   task_definition = "${aws_ecs_task_definition.webfe_task.arn}" # Referencing the task our service will spin up
   launch_type     = "FARGATE"
+  #enable_service_discovery = true
   desired_count   = 1 # Setting the number of containers we want deployed to 3
+
 
   load_balancer {
     target_group_arn = "${aws_lb_target_group.webfe_target_group.arn}" # Referencing our target group
