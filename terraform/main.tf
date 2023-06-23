@@ -10,6 +10,12 @@ variable "wrapper_host"  {
   default = ""
 }
 
+variable "wrapper_port"  {
+  description = "port of the wrapper"
+  type = string
+  default = ""
+}
+
 # No longer need this, using dockerhub repo
 #
 #resource "aws_ecr_repository" "my_first_ecr_repo" {
@@ -45,7 +51,7 @@ resource "aws_ecs_task_definition" "webfe_task" {
       },
       {
         "name": "WRAPPER_PORT",
-        "value": "3000"
+        "value": "${var.wrapper_port}"
       },
       {
         "name": "WRAPPER_HOST",
@@ -100,17 +106,19 @@ resource "aws_ecs_service" "webfe_service" {
   #enable_service_discovery = true
   desired_count   = 1 # Setting the number of containers we want deployed to 3
 
-  service_connect_configuration {
-    enabled   = true
-    namespace = aws_service_discovery_http_namespace.namespace.arn
-#    service {
-#      discovery_name = "md-service"
-#      port_name      = "api-port"
-#      client_alias {
-#        dns_name = "md-wrapper-dns"
-#        port     = 3000
-#      }
-   }
+#  service_connect_configuration {
+#    enabled   = true
+#    #namespace = "${data.aws_service_discovery_http_namespace.namespace.arn}"
+#    #namespace = aws_service_discovery_http_namespace.namespace.arn
+#    namespace = "monitor-namespace"
+##    service {
+##      discovery_name = "md-service"
+##      port_name      = "api-port"
+##      client_alias {
+##        dns_name = "md-wrapper-dns"
+##        port     = 3000
+##      }
+#   }
 
 
 
@@ -128,6 +136,11 @@ resource "aws_ecs_service" "webfe_service" {
     security_groups  = ["${aws_security_group.service_security_group.id}"] # Setting the security group
   }
 }
+
+#resource "aws_service_discovery_http_namespace" "namespace" {
+#  name        = "namespace"
+#  description = "Namespace for MD Service Discovery"
+#}
 
 resource "aws_security_group" "service_security_group" {
   ingress {
