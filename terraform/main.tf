@@ -1,5 +1,5 @@
 provider "aws" {
-  version = "~> 2.0"
+  version = "~> 5.5"
   region  = "eu-west-2" # Setting my region to London. Use your own region here
 #  access_key = ""
 #  secret_key = ""
@@ -99,6 +99,19 @@ resource "aws_ecs_service" "webfe_service" {
   launch_type     = "FARGATE"
   #enable_service_discovery = true
   desired_count   = 1 # Setting the number of containers we want deployed to 3
+
+  service_connect_configuration {
+    enabled   = true
+    namespace = aws_service_discovery_http_namespace.namespace.arn
+#    service {
+#      discovery_name = "md-service"
+#      port_name      = "api-port"
+#      client_alias {
+#        dns_name = "md-wrapper-dns"
+#        port     = 3000
+#      }
+   }
+
 
 
   load_balancer {
