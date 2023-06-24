@@ -1,5 +1,5 @@
 provider "aws" {
-  version = "~> 5.5"
+  version = "~> 2.7"
   region  = "eu-west-2" # Setting my region to London. Use your own region here
 #  access_key = ""
 #  secret_key = ""
