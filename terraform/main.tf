@@ -16,6 +16,13 @@ variable "wrapper_port"  {
   default = ""
 }
 
+variable "docker_sha"  {
+  description = "The SHA from the docker build"
+  type = string
+  default = ""
+}
+
+
 # No longer need this, using dockerhub repo
 #
 #resource "aws_ecr_repository" "my_first_ecr_repo" {
@@ -34,7 +41,7 @@ resource "aws_ecs_task_definition" "webfe_task" {
   [
     {
       "name": "webfe-task",
-      "image": "mcguinnessa/web-fe",
+      "image": "mcguinnessa/web-fe@${var.docker_sha}",
       "essential": true,
       "portMappings": [
         {
