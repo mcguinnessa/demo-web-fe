@@ -80,8 +80,8 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
           //data: [86, 114, 106, 106, 107, 111, 133],
           data: mo_json.data,
           label: "MO",
-          borderColor: "#3e95cd",
-          backgroundColor: "#7bb6dd",
+          borderColor: "#2d0ce8",
+          backgroundColor: "#6a53ed",
           fill: false,
         }
         ]
@@ -89,11 +89,24 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
       options: {
         responsive: true,
         maintainAspectRatio: false,
+	plugins: {
+            title: {
+                display: true,
+                text: 'MO Traffic'
+            }
+        },
 	scales: {
 	  x: {
             type: 'time',
 	    time: {
 	       unit: 'hour'
+	    }
+	  },
+	  y: {
+	    ticks: {
+              callback: function(value, index, ticks) {
+              return (value / 1000000) + "M";
+              }
 	    }
 	  }
 	}
@@ -108,8 +121,9 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
         //data: [86, 114, 106, 106, 107, 111, 133],
         data: mt_json.data,
         label: "MT",
-        borderColor: "#3e95cd",
-        backgroundColor: "#7bb6dd",
+        //borderColor: "#3e95cd",
+	borderColor: "#db2751",
+        backgroundColor: "#db4064",
         fill: false,
       }
       ]
@@ -118,11 +132,25 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
 	//responsive means the chart is resized when the window is
         responsive: true,
         maintainAspectRatio: false,
+	plugins: {
+            title: {
+                display: true,
+                text: 'MT Traffic'
+            }
+        },
 	scales: {
 	  x: {
             type: 'time',
 	    time: {
 	       unit: 'hour'
+	    }
+	  },
+	  y: {
+	    ticks: {
+              callback: function(value, index, ticks) {
+              return (value / 1000000) + "M";
+              //return '$' + value;
+              }
 	    }
 	  }
 	}
@@ -144,21 +172,31 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
           //data: [86, 114, 106, 106, 107, 111, 133],
           data: cpuusage_json.data,
           label: "%",
-          borderColor: "#3e95cd",
-          backgroundColor: "#7bb6dd",
-          fill: true,
+          borderColor: "#e3d110",
+          backgroundColor: "#e3d754",
+          fill: false,
         }
         ]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
+	plugins: {
+            title: {
+                display: true,
+                text: 'CPU Usage'
+            }
+        },
 	scales: {
 	  x: {
             type: 'time',
 	    time: {
 	       unit: 'hour'
 	    }
+	  },
+	  y: {
+	    min: 0,
+	    max: 100
 	  }
 	}
       }
@@ -171,15 +209,21 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
           //data: [86, 114, 106, 106, 107, 111, 133],
           data: cputemp_json.data,
           label: "oC",
-          borderColor: "#3e95cd",
-          backgroundColor: "#7bb6dd",
-          fill: true,
+          borderColor: "#0be6cc",
+          backgroundColor: "#54f0de",
+          fill: false,
         }
         ]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
+	plugins: {
+            title: {
+                display: true,
+                text: 'CPU Temperature'
+            }
+        },
 	scales: {
 	  x: {
             type: 'time',
@@ -198,21 +242,31 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
           //data: [86, 114, 106, 106, 107, 111, 133],
           data: memusage_json.data,
           label: "%",
-          borderColor: "#3e95cd",
-          backgroundColor: "#7bb6dd",
-          fill: true,
+          borderColor: "#d90bcb",
+          backgroundColor: "#d173cb",
+          fill: false,
         }
         ]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
+	plugins: {
+            title: {
+                display: true,
+                text: 'Memory Usage'
+            }
+        },
 	scales: {
 	  x: {
             type: 'time',
 	    time: {
 	       unit: 'hour'
 	    }
+	  },
+	  y: {
+	    min: 0,
+	    max: 100
 	  }
 	}
       }
@@ -225,8 +279,8 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
           //data: [86, 114, 106, 106, 107, 111, 133],
           data: diskusage_json.data,
           label: "%",
-          borderColor: "#3e95cd",
-          backgroundColor: "#7bb6dd",
+          borderColor: "#17e34d",
+          backgroundColor: "#61e885",
           fill: true,
         }
         ]
@@ -234,12 +288,22 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
       options: {
         responsive: true,
         maintainAspectRatio: false,
+	plugins: {
+            title: {
+                display: true,
+                text: 'Disk Usage'
+            }
+        },
 	scales: {
 	  x: {
             type: 'time',
 	    time: {
-	       unit: 'hour'
+	       unit: 'day'
 	    }
+	  },
+	  y: {
+	    min: 0,
+	    max: 100
 	  }
 	}
       }
