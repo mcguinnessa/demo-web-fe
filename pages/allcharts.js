@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 //import { Chart } from "chart.js";
 import { Chart } from "chart.js/auto";
+import 'chartjs-adapter-luxon';
 
 import styles from '../styles.module.css'
 require('events').EventEmitter.prototype._maxListeners = 100;
@@ -87,7 +88,15 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
       },
       options: {
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
+	scales: {
+	  x: {
+            type: 'time',
+	    time: {
+	       unit: 'hour'
+	    }
+	  }
+	}
       }
     });
   var mtChart = new Chart(mt_ctx, {
@@ -108,7 +117,7 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
       options: {
 	//responsive means the chart is resized when the window is
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
 	scales: {
 	  x: {
             type: 'time',
@@ -143,7 +152,15 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
       },
       options: {
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
+	scales: {
+	  x: {
+            type: 'time',
+	    time: {
+	       unit: 'hour'
+	    }
+	  }
+	}
       }
     });
     var cputChart = new Chart(cput_ctx, {
@@ -162,7 +179,15 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
       },
       options: {
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
+	scales: {
+	  x: {
+            type: 'time',
+	    time: {
+	       unit: 'hour'
+	    }
+	  }
+	}
       }
     });
     var memChart = new Chart(mem_ctx, {
@@ -181,7 +206,15 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
       },
       options: {
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
+	scales: {
+	  x: {
+            type: 'time',
+	    time: {
+	       unit: 'hour'
+	    }
+	  }
+	}
       }
     });
     var diskChart = new Chart(disk_ctx, {
@@ -200,7 +233,15 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
       },
       options: {
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
+	scales: {
+	  x: {
+            type: 'time',
+	    time: {
+	       unit: 'hour'
+	    }
+	  }
+	}
       }
     });
   }, [])
