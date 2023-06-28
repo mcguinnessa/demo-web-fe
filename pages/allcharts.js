@@ -82,7 +82,7 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
           label: "MO",
           borderColor: "#2d0ce8",
           backgroundColor: "#6a53ed",
-          fill: false,
+          fill: true,
         }
         ]
       },
@@ -99,7 +99,7 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
 	  x: {
             type: 'time',
 	    time: {
-	       unit: 'hour'
+	       unit: 'day'
 	    }
 	  },
 	  y: {
@@ -124,7 +124,7 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
         //borderColor: "#3e95cd",
 	borderColor: "#db2751",
         backgroundColor: "#db4064",
-        fill: false,
+        fill: true,
       }
       ]
     },
@@ -142,7 +142,7 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
 	  x: {
             type: 'time',
 	    time: {
-	       unit: 'hour'
+	       unit: 'day'
 	    }
 	  },
 	  y: {
@@ -191,7 +191,7 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
 	  x: {
             type: 'time',
 	    time: {
-	       unit: 'hour'
+	       unit: 'day'
 	    }
 	  },
 	  y: {
@@ -228,7 +228,7 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
 	  x: {
             type: 'time',
 	    time: {
-	       unit: 'hour'
+	       unit: 'day'
 	    }
 	  }
 	}
@@ -261,7 +261,7 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
 	  x: {
             type: 'time',
 	    time: {
-	       unit: 'hour'
+	       unit: 'day'
 	    }
 	  },
 	  y: {
