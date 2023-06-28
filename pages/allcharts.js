@@ -230,6 +230,10 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
 	    time: {
 	       unit: 'day'
 	    }
+	  },
+	  y: {
+	    min: 0,
+	    max: 100
 	  }
 	}
       }
