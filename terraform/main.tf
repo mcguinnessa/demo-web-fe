@@ -158,7 +158,7 @@ resource "aws_security_group" "service_security_group" {
     # Only allowing traffic in from the load balancer security group
     #security_groups = ["${aws_security_group.load_balancer_security_group.id}"]
     #security_groups = ["sg-039063a37c674e76b", "sg-05aca12900ed1f068"]
-    security_groups = ["ADM-Demo-UI-LB-SG"]
+    security_groups = ["sg-08250d7710c495a8d"]
   }
 
   egress {
