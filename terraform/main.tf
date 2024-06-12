@@ -80,7 +80,8 @@ resource "aws_ecs_task_definition" "webfe_task" {
   network_mode             = "awsvpc"    # Using awsvpc as our network mode as this is required for Fargate
   memory                   = 2048         # Specifying the memory our container requires
   cpu                      = 1024         # Specifying the CPU our container requires
-  execution_role_arn       = "${aws_iam_role.ecsTaskExecutionRole.arn}"
+#  execution_role_arn       = "${aws_iam_role.ecsTaskExecutionRole.arn}"
+  execution_role_arn       = "arn:aws:iam::637423404396:role/AlexECSTaskExecutionRole"
 }
 
 resource "aws_iam_role" "ecsTaskExecutionRole" {
@@ -131,7 +132,8 @@ resource "aws_ecs_service" "webfe_service" {
 
   load_balancer {
     #target_group_arn = "${aws_lb_target_group.webfe_target_group.arn}" # Referencing our target group
-    target_group_arn = "arn:aws:elasticloadbalancing:eu-west-2:182028175464:targetgroup/web-target-group/36d0fe06e8a225b1"
+    #target_group_arn = "arn:aws:elasticloadbalancing:eu-west-2:182028175464:targetgroup/web-target-group/36d0fe06e8a225b1"
+    target_group_arn = "arn:aws:elasticloadbalancing:eu-west-2:637423404396:targetgroup/web-target-group/6de0ff81951cb023"
     container_name   = "${aws_ecs_task_definition.webfe_task.family}"
     container_port   = 3000 # Specifying the container port
   }
