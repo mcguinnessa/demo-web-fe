@@ -160,6 +160,8 @@ resource "aws_security_group" "service_security_group" {
     # Only allowing traffic in from the load balancer security group
     #security_groups = ["${aws_security_group.load_balancer_security_group.id}"]
     #security_groups = ["sg-039063a37c674e76b", "sg-05aca12900ed1f068"]
+
+    ##  WEB LB , MD LB
     security_groups = ["sg-0bb3edbeed5618502", "sg-05edc1b1e4b5cd1e2"]
   }
 

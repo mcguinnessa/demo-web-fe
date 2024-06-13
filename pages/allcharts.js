@@ -82,7 +82,8 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
           label: "MO",
           borderColor: "#2d0ce8",
           backgroundColor: "#6a53ed",
-          fill: true,
+	#fill: true,
+          fill: false,
         }
         ]
       },
