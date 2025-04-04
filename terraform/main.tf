@@ -133,7 +133,8 @@ resource "aws_ecs_service" "webfe_service" {
   load_balancer {
     #target_group_arn = "${aws_lb_target_group.webfe_target_group.arn}" # Referencing our target group
     #target_group_arn = "arn:aws:elasticloadbalancing:eu-west-2:182028175464:targetgroup/web-target-group/36d0fe06e8a225b1"
-    target_group_arn = "arn:aws:elasticloadbalancing:eu-west-2:637423404396:targetgroup/web-target-group/6de0ff81951cb023"
+    #target_group_arn = "arn:aws:elasticloadbalancing:eu-west-2:637423404396:targetgroup/web-target-group/6de0ff81951cb023"
+    target_group_arn = "arn:aws:elasticloadbalancing:eu-west-2:637423404396:targetgroup/web-target-group/3362d8cf26b7b5e8"
     container_name   = "${aws_ecs_task_definition.webfe_task.family}"
     container_port   = 3000 # Specifying the container port
   }
