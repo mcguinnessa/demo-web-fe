@@ -164,7 +164,7 @@ resource "aws_security_group" "service_security_group" {
 
     ##  WEB LB , MD LB
     #security_groups = ["sg-0bb3edbeed5618502", "sg-05edc1b1e4b5cd1e2"]
-    security_groups = ["sg-0df381f9e766dc9c4"]
+    security_groups = ["sg-0b3a7490e0cead075", "sg-0df381f9e766dc9c4"]
   }
 
   egress {
