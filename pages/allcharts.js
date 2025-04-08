@@ -1,12 +1,9 @@
 import { useEffect } from "react"
-//import { Chart } from "chart.js";
 import { Chart } from "chart.js/auto";
 import 'chartjs-adapter-luxon';
 
 import styles from '../styles.module.css'
 require('events').EventEmitter.prototype._maxListeners = 100;
-
-
 
 
 export async function getStaticProps() {
@@ -63,7 +60,6 @@ export async function getStaticProps() {
 
 function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, diskusage_json}) {
 
-
   useEffect(() => {
 
     var mo_ctx = document.getElementById('moChart').getContext('2d');
@@ -77,99 +73,83 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
       data: {
         labels: mo_json.timestamps,
         datasets: [{
-          //data: [86, 114, 106, 106, 107, 111, 133],
           data: mo_json.data,
           label: "MO",
           borderColor: "#2d0ce8",
           backgroundColor: "#6a53ed",
           fill: false,
-        }
-        ]
+        }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-	plugins: {
+	    plugins: {
             title: {
                 display: true,
                 text: 'MO Traffic'
             }
         },
-	scales: {
-	  x: {
+	    scales: {
+	      x: {
             type: 'time',
-	    time: {
-	       unit: 'day'
-	    }
-	  },
-	  y: {
-	    ticks: {
+	        time: {
+	          unit: 'day'
+	        }
+	      },
+	      y: {
+	        ticks: {
               callback: function(value, index, ticks) {
-              return (value / 1000000) + "M";
+                return (value / 1000000) + "M";
               }
+	        }
+	      }
 	    }
-	  }
-	}
       }
     });
-  var mtChart = new Chart(mt_ctx, {
-    type: 'line',
-    data: {
-      //labels: ["Tunday", "Tonday", "Tuesday", "Tednesday", "Thursday", "Triday", "Taturday"],
-      labels: mt_json.timestamps,
-      datasets: [{
-        //data: [86, 114, 106, 106, 107, 111, 133],
-        data: mt_json.data,
-        label: "MT",
-        //borderColor: "#3e95cd",
-	borderColor: "#db2751",
-        backgroundColor: "#db4064",
-        fill: true,
-      }
-      ]
-    },
+    var mtChart = new Chart(mt_ctx, {
+      type: 'line',
+      data: {
+        labels: mt_json.timestamps,
+        datasets: [{
+          data: mt_json.data,
+          label: "MT",
+	      borderColor: "#db2751",
+          backgroundColor: "#db4064",
+          fill: true,
+        }]
+      },
       options: {
-	//responsive means the chart is resized when the window is
+	    //responsive means the chart is resized when the window is
         responsive: true,
         maintainAspectRatio: false,
-	plugins: {
-            title: {
-                display: true,
-                text: 'MT Traffic'
-            }
+	    plugins: {
+          title: {
+            display: true,
+            text: 'MT Traffic'
+          }
         },
-	scales: {
-	  x: {
+	    scales: {
+	      x: {
             type: 'time',
-	    time: {
-	       unit: 'day'
-	    }
-	  },
-	  y: {
-	    ticks: {
+	        time: {
+	          unit: 'day'
+	        }
+	      },
+	      y: {
+	        ticks: {
               callback: function(value, index, ticks) {
-              return (value / 1000000) + "M";
-              //return '$' + value;
+                return (value / 1000000) + "M";
               }
+	       }
+	      }
 	    }
-	  }
-	}
-//        layout: {
-//          padding: {
-//            top: 5,
-//            left: 35,
-//            right: 35,
-//            bottom: 15
-//          }
-//	}
       }
-  });
+    });
     var cpuuChart = new Chart(cpuu_ctx, {
       type: 'line',
       data: {
         labels: cpuusage_json.timestamps,
         datasets: [{
-          //data: [86, 114, 106, 106, 107, 111, 133],
           data: cpuusage_json.data,
           label: "%",
           borderColor: "#e3d110",
@@ -181,24 +161,24 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
       options: {
         responsive: true,
         maintainAspectRatio: false,
-	plugins: {
-            title: {
-                display: true,
-                text: 'CPU Usage'
+	    plugins: {
+          title: {
+            display: true,
+              text: 'CPU Usage'
             }
-        },
-	scales: {
-	  x: {
+          },
+	    scales: {
+	      x: {
             type: 'time',
-	    time: {
-	       unit: 'day'
+	        time: {
+	          unit: 'day'
+	        }
+	      },
+	      y: {
+	        min: 0,
+	        max: 100
+	      }
 	    }
-	  },
-	  y: {
-	    min: 0,
-	    max: 100
-	  }
-	}
       }
     });
     var cputChart = new Chart(cput_ctx, {
@@ -206,36 +186,34 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
       data: {
         labels: cputemp_json.timestamps,
         datasets: [{
-          //data: [86, 114, 106, 106, 107, 111, 133],
           data: cputemp_json.data,
           label: "oC",
           borderColor: "#0be6cc",
           backgroundColor: "#54f0de",
           fill: false,
-        }
-        ]
+        }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-	plugins: {
-            title: {
-                display: true,
-                text: 'CPU Temperature'
-            }
+	    plugins: {
+          title: {
+            display: true,
+            text: 'CPU Temperature'
+          }
         },
-	scales: {
-	  x: {
+	    scales: {
+	      x: {
             type: 'time',
-	    time: {
-	       unit: 'day'
+	        time: {
+	          unit: 'day'
+	        }
+	      },
+	      y: {
+	        min: 0,
+	        max: 100
+	      }
 	    }
-	  },
-	  y: {
-	    min: 0,
-	    max: 100
-	  }
-	}
       }
     });
     var memChart = new Chart(mem_ctx, {
@@ -243,36 +221,34 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
       data: {
         labels: memusage_json.timestamps,
         datasets: [{
-          //data: [86, 114, 106, 106, 107, 111, 133],
           data: memusage_json.data,
           label: "%",
           borderColor: "#d90bcb",
           backgroundColor: "#d173cb",
           fill: false,
-        }
-        ]
+        }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-	plugins: {
-            title: {
-                display: true,
-                text: 'Memory Usage'
-            }
+	    plugins: {
+          title: {
+            display: true,
+            text: 'Memory Usage'
+          }
         },
-	scales: {
-	  x: {
+	    scales: {
+	      x: {
             type: 'time',
-	    time: {
-	       unit: 'day'
+	        time: {
+	         unit: 'day'
+	        }
+	      },
+	      y: {
+	        min: 0,
+	        max: 100
+	      }
 	    }
-	  },
-	  y: {
-	    min: 0,
-	    max: 100
-	  }
-	}
       }
     });
     var diskChart = new Chart(disk_ctx, {
@@ -280,36 +256,34 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
       data: {
         labels: diskusage_json.timestamps,
         datasets: [{
-          //data: [86, 114, 106, 106, 107, 111, 133],
           data: diskusage_json.data,
           label: "%",
           borderColor: "#17e34d",
           backgroundColor: "#61e885",
           fill: true,
-        }
-        ]
+        }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-	plugins: {
-            title: {
-                display: true,
-                text: 'Disk Usage'
+	    plugins: {
+          title: {
+            display: true,
+            text: 'Disk Usage'
             }
-        },
-	scales: {
-	  x: {
+          },
+	      scales: {
+	      x: {
             type: 'time',
-	    time: {
-	       unit: 'day'
+	        time: {
+	          unit: 'day'
+	        }
+	      },
+	      y: {
+	        min: 0,
+	        max: 100
+	      }
 	    }
-	  },
-	  y: {
-	    min: 0,
-	    max: 100
-	  }
-	}
       }
     });
   }, [])
@@ -332,32 +306,3 @@ function Example({mo_json, mt_json, cpuusage_json, cputemp_json, memusage_json, 
 
 export default Example;
 
-/*
-  <div className={styles.floatcontainer}>
-
-  <div className={styles.floatchild}>
-       MO Traffic
-       <canvas id="moChart" width="400px" height="400px" ></canvas>
-  </div>
-  <div className={styles.floatchild}>
-       MT Traffic
-       <canvas id="mtChart" width="400px" height="400px" ></canvas>
-  </div>
-  <div className={styles.floatchild}>
-       CPU Usage
-       <canvas id="cpuuChart" ></canvas>
-  </div>
-  <div className={styles.floatchild}>
-       CPU Temp
-       <canvas id="cputChart" ></canvas>
-  </div>
-  <div className={styles.floatchild}>
-       Memory Usage
-       <canvas id="memChart" width="400px" height="400px" ></canvas>
-  </div>
-  <div className={styles.floatchild}>
-       Disk Usage
-       <canvas id="diskChart" width="400px" height="400px" ></canvas>
-  </div>
-  </div>
-  */
